@@ -38,7 +38,7 @@
             {
                 //12.
                 case Directions.Up:
-                    if (_startPosY - _truckHeight - Truck.Step > 0)
+                    if (_startPosY - Truck.Step > 0)
                     {
                         _startPosY -= Truck.Step;
                     }
@@ -59,7 +59,7 @@
                     break;
                 //9.
                 case Directions.Left:
-                    if (_startPosX - _truckWidth - Truck.Step > 0)
+                    if (_startPosX - Truck.Step > 0)
                     {
                         _startPosX -= Truck.Step;
                     }
