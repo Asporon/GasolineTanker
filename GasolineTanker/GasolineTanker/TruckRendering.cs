@@ -19,7 +19,7 @@
 
         public void SetPosition(int x, int y, int width, int height)
         {
-            if (x > 0 && y > 0 && width > 0 && height > 0 &&  x < width && y < height)
+            if (x > 0 && y > 0 && width > 0 && height > 0 &&  x + _truckWidth < width && y + _truckHeight < height)
             {
                 _startPosX = x;
                 _startPosY = y;
