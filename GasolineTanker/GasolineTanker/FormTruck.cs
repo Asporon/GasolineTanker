@@ -2,7 +2,7 @@
 {
     public partial class FormTruck : Form
     {
-        private TruckRendering _truck;
+        private DrawningTruck _truck;
         
         public FormTruck()
         {
@@ -20,7 +20,7 @@
         private void ButtonCreate_Click(object sender, EventArgs e)
         {
             Random rnd = new();
-            _truck = new TruckRendering();
+            _truck = new DrawningTruck();
             _truck.Init(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)));
             _truck.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxTruck.Width, pictureBoxTruck.Height);
             toolStripStatusLabelSpeed.Text = $"Скорость: {_truck.Truck.Speed}";
