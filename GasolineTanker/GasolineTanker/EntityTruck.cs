@@ -7,7 +7,7 @@
         public Color BodyColor { get; private set; }
         public float Step => Speed * 100 / Weight;
 
-        public void Init(int speed, float weight, Color bodyColor)
+        public EntityTruck(int speed, float weight, Color bodyColor)
         {
             Random rnd = new();
             Speed = speed <= 0 ? rnd.Next(50, 150) : speed;

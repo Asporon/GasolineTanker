@@ -2,19 +2,25 @@
 {
     internal class DrawningTruck
     {
-        public EntityTruck Truck { get; private set; }
+        public EntityTruck Truck { get; protected set; }
 
-        private float _startPosX;
-        private float _startPosY;
+        protected float _startPosX;
+        protected float _startPosY;
         private int? _pictureWidth = null;
         private int? _pictureHeight = null;
         private readonly int _truckWidth = 80;
         private readonly int _truckHeight = 70;
 
-        public void Init(int speed, float weight, Color bodyColor)
+        public DrawningTruck(int speed, float weight, Color bodyColor)
         {
-            Truck = new EntityTruck();
-            Truck.Init(speed, weight, bodyColor);
+            Truck = new EntityTruck(speed, weight, bodyColor);
+        }
+
+        protected DrawningTruck(int speed, float weight, Color bodyColor, int truckWidth, int truckHeight) :
+            this(speed, weight, bodyColor)
+        {
+            _truckWidth = truckWidth;
+            _truckHeight = truckHeight;
         }
 
         public void SetPosition(int x, int y, int width, int height)
@@ -67,7 +73,7 @@
             }
         }
 
-        public void DrawTransport(Graphics g)
+        public virtual void DrawTransport(Graphics g)
         {
             if (_startPosX < 0 || _startPosY < 0
                 || !_pictureHeight.HasValue || !_pictureWidth.HasValue)
@@ -105,6 +111,11 @@
             {
                 _startPosY = _pictureHeight.Value - _truckHeight;
             }
+        }
+
+        public (float Left, float Right, float Top, float Bottom) GetCurrentPosition()
+        {
+            return (_startPosX, _startPosY, _startPosX + _carWidth, _startPosY + _carHeight);
         }
     }
 }
