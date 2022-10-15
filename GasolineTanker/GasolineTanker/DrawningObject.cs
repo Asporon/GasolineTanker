@@ -1,0 +1,34 @@
+﻿namespace GasolineTanker
+{
+    internal class DrawningObject : IDrawningObject
+    {
+        private DrawningTruck _truck = null;
+
+        public DrawningObject(DrawningTruck truck)
+        {
+            _truck = truck;
+        }
+
+        public float Step => _truck?.Truck?.Step ?? 0;
+
+        public (float Left, float Right, float Top, float Bottom) GetCurrentPosition()
+        {
+            return _truck?.GetCurrentPosition() ?? default;
+        }
+
+        public void MoveObject(Direction direction)
+        {
+            _truck?.MoveTransport(direction);
+        }
+
+        public void SetObject(int x, int y, int width, int height)
+        {
+            _truck.SetPosition(x, y, width, height);
+        }
+
+        void IDrawningObject.DrawningObject(Graphics g)
+        {
+            _truck.DrawTransport(g);
+        }
+    }
+}

@@ -20,8 +20,8 @@
         private void ButtonCreate_Click(object sender, EventArgs e)
         {
             Random rnd = new();
-            _truck = new DrawningTruck();
-            _truck.Init(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)));
+            _truck = new DrawningTruck(rnd.Next(100, 300), rnd.Next(1000, 2000), 
+                Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)));
             _truck.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxTruck.Width, pictureBoxTruck.Height);
             toolStripStatusLabelSpeed.Text = $"Скорость: {_truck.Truck.Speed}";
             toolStripStatusLabelWeight.Text = $"Вес: {_truck.Truck.Weight}";
@@ -35,16 +35,16 @@
             switch (name)
             {
                 case "buttonUp":
-                    _truck?.MoveTransport(Directions.Up);
+                    _truck?.MoveTransport(Direction.Up);
                     break;
                 case "buttonDown":
-                    _truck?.MoveTransport(Directions.Down);
+                    _truck?.MoveTransport(Direction.Down);
                     break;
                 case "buttonLeft":
-                    _truck?.MoveTransport(Directions.Left);
+                    _truck?.MoveTransport(Direction.Left);
                     break;
                 case "buttonRight":
-                    _truck?.MoveTransport(Directions.Right);
+                    _truck?.MoveTransport(Direction.Right);
                     break;
             }
             Draw();

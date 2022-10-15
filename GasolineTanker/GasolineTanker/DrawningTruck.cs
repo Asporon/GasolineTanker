@@ -34,7 +34,7 @@
             }
         }
 
-        public void MoveTransport(Directions direction)
+        public void MoveTransport(Direction direction)
         {
             if (!_pictureWidth.HasValue || !_pictureHeight.HasValue)
             {
@@ -43,28 +43,28 @@
             switch (direction)
             {
                 //12.
-                case Directions.Up:
+                case Direction.Up:
                     if (_startPosY - Truck.Step > 0)
                     {
                         _startPosY -= Truck.Step;
                     }
                     break;
                 //3.
-                case Directions.Right:
+                case Direction.Right:
                     if (_startPosX + _truckWidth + Truck.Step < _pictureWidth)
                     {
                         _startPosX += Truck.Step;
                     }
                     break;
                 //6.
-                case Directions.Down:
+                case Direction.Down:
                     if (_startPosY + _truckHeight + Truck.Step < _pictureHeight)
                     {
                         _startPosY += Truck.Step;
                     }
                     break;
                 //9.
-                case Directions.Left:
+                case Direction.Left:
                     if (_startPosX - Truck.Step > 0)
                     {
                         _startPosX -= Truck.Step;
@@ -115,7 +115,7 @@
 
         public (float Left, float Right, float Top, float Bottom) GetCurrentPosition()
         {
-            return (_startPosX, _startPosY, _startPosX + _carWidth, _startPosY + _carHeight);
+            return (_startPosX, _startPosY, _startPosX + _truckWidth, _startPosY + _truckHeight);
         }
     }
 }

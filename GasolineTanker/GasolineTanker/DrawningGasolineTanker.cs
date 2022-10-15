@@ -1,4 +1,6 @@
-﻿namespace GasolineTanker
+﻿using System;
+
+namespace GasolineTanker
 {
     internal class DrawningGasolineTanker : DrawningTruck
     {
@@ -15,24 +17,29 @@
                 return;
             }
 
-            Pen pen = new(Color.Black);
-            Brush dopBrush = new SolidBrush(gasolineTanker.DopColor);
+            Brush brDop = new SolidBrush(gasolineTanker.DopColor);
+            Brush brDarkGray = new SolidBrush(Color.DarkGray);
 
             if (gasolineTanker.Сistern)
             {
-                
+                g.FillRectangle(brDop, _startPosX, _startPosY + 20, 50, 20);
+                g.FillRectangle(brDarkGray, _startPosX + 10, _startPosY + 20, 5, 20);
+                g.FillRectangle(brDarkGray, _startPosX + 35, _startPosY + 20, 5, 20);
             }
-
-            _startPosX += 10;
-            _startPosY += 5;
-            base.DrawTransport(g);
-            _startPosX -= 10;
-            _startPosY -= 5;
 
             if (gasolineTanker.Flasher)
             {
-                
+                g.FillRectangle(brDarkGray, _startPosX + 55, _startPosY + 8, 5, 37);
+
+                Brush brOrange = new SolidBrush(Color.FromArgb(255, 140, 0));
+                g.FillRectangle(brOrange, _startPosX + 53, _startPosY, 9, 8);
             }
+
+            _startPosX += 5;
+            _startPosY += 5;
+            base.DrawTransport(g);
+            _startPosX -= 5;
+            _startPosY -= 5;
         }
     }
 }
