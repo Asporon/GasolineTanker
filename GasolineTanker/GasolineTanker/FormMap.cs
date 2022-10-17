@@ -17,6 +17,7 @@ namespace GasolineTanker
         public FormMap()
         {
             InitializeComponent();
+            _abstractMap = new SimpleMap();
         }
 
         private void SetData(DrawningTruck truck)

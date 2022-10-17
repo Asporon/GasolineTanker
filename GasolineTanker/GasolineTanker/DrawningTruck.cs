@@ -115,7 +115,7 @@
 
         public (float Left, float Right, float Top, float Bottom) GetCurrentPosition()
         {
-            return (_startPosX, _startPosY, _startPosX + _truckWidth, _startPosY + _truckHeight);
+            return (_startPosX, _startPosX + _truckWidth, _startPosY, _startPosY + _truckHeight);
         }
     }
 }
