@@ -1,6 +1,6 @@
 ﻿namespace GasolineTanker
 {
-    internal enum Direction
+    public enum Direction
     {
         None = 0,
         Up = 1,

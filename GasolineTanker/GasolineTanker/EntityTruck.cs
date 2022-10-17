@@ -1,6 +1,6 @@
 ﻿namespace GasolineTanker
 {
-    internal class EntityTruck
+    public class EntityTruck
     {
         public int Speed { get; private set; }
         public float Weight { get; private set; }

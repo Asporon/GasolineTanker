@@ -1,6 +1,6 @@
 ﻿namespace GasolineTanker
 {
-    internal class DrawningTruck
+    public class DrawningTruck
     {
         public EntityTruck Truck { get; protected set; }
 

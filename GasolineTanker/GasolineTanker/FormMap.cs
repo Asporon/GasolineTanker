@@ -26,7 +26,7 @@ namespace GasolineTanker
             toolStripStatusLabelWeight.Text = $"Вес: {truck.Truck.Weight}";
             toolStripStatusLabelBodyColor.Text = $"Цвет: {truck.Truck.BodyColor.Name}";
             pictureBoxTruck.Image = _abstractMap.CreateMap(pictureBoxTruck.Width, pictureBoxTruck.Height,
-                new DrawningObject(truck));
+                new DrawningObjectTruck(truck));
         }
 
         private void ButtonCreate_Click(object sender, EventArgs e)

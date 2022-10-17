@@ -1,10 +1,10 @@
 ﻿namespace GasolineTanker
 {
-    internal class DrawningObject : IDrawningObject
+    internal class DrawningObjectTruck : IDrawningObject
     {
         private DrawningTruck _truck = null;
 
-        public DrawningObject(DrawningTruck truck)
+        public DrawningObjectTruck(DrawningTruck truck)
         {
             _truck = truck;
         }

@@ -38,6 +38,8 @@
             this.buttonDown = new System.Windows.Forms.Button();
             this.buttonLeft = new System.Windows.Forms.Button();
             this.pictureBoxTruck = new System.Windows.Forms.PictureBox();
+            this.buttonCreateModif = new System.Windows.Forms.Button();
+            this.buttonSelectTruck = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTruck)).BeginInit();
             this.SuspendLayout();
@@ -142,11 +144,35 @@
             this.pictureBoxTruck.TabStop = false;
             this.pictureBoxTruck.Resize += new System.EventHandler(this.pictureBoxTruck_Resize);
             // 
+            // buttonCreateModif
+            // 
+            this.buttonCreateModif.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonCreateModif.Location = new System.Drawing.Point(118, 394);
+            this.buttonCreateModif.Name = "buttonCreateModif";
+            this.buttonCreateModif.Size = new System.Drawing.Size(150, 30);
+            this.buttonCreateModif.TabIndex = 7;
+            this.buttonCreateModif.Text = "Модифицировать";
+            this.buttonCreateModif.UseVisualStyleBackColor = true;
+            this.buttonCreateModif.Click += new System.EventHandler(this.ButtonCreateModif_Click);
+            // 
+            // buttonSelectTruck
+            // 
+            this.buttonSelectTruck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSelectTruck.Location = new System.Drawing.Point(662, 394);
+            this.buttonSelectTruck.Name = "buttonSelectTruck";
+            this.buttonSelectTruck.Size = new System.Drawing.Size(100, 30);
+            this.buttonSelectTruck.TabIndex = 8;
+            this.buttonSelectTruck.Text = "Выбрать";
+            this.buttonSelectTruck.UseVisualStyleBackColor = true;
+            this.buttonSelectTruck.Click += new System.EventHandler(this.ButtonSelectTruck_Click);
+            // 
             // FormTruck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 453);
+            this.Controls.Add(this.buttonSelectTruck);
+            this.Controls.Add(this.buttonCreateModif);
             this.Controls.Add(this.buttonRight);
             this.Controls.Add(this.buttonDown);
             this.Controls.Add(this.buttonLeft);
@@ -177,5 +203,7 @@
         private Button buttonDown;
         private Button buttonLeft;
         private PictureBox pictureBoxTruck;
+        private Button buttonCreateModif;
+        private Button buttonSelectTruck;
     }
 }
