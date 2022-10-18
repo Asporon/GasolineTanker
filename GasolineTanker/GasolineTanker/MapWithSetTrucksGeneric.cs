@@ -21,7 +21,7 @@
             _map = map;
         }
 
-        public static bool operator +(MapWithSetTrucksGeneric<T, U> map, T Truck)
+        public static int operator +(MapWithSetTrucksGeneric<T, U> map, T Truck)
         {
             return map._setTrucks.Insert(Truck);
         }
@@ -89,6 +89,9 @@
 
         private void DrawBackground(Graphics g)
         {
+            Brush asphaltColor = new SolidBrush(Color.Gray);
+            g.FillRectangle(asphaltColor, 0, 0, _pictureWidth, _pictureHeight);
+            
             Pen pen = new(Color.Black, 3);
             for (int i = 0; i < _pictureWidth / _placeSizeWidth; i++)
             {

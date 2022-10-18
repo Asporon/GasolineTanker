@@ -11,7 +11,7 @@
             _places = new T[count];
         }
 
-        public bool Insert(T truck)
+        public int Insert(T truck)
         {
             bool freeSpace = false;
             int firstFreeElement = -1;
@@ -24,7 +24,7 @@
                 }
             }
             if (!freeSpace)
-                return false;
+                return -1;
 
             for (int i = firstFreeElement - 1; i >= 0; i--)
             {
@@ -32,10 +32,10 @@
             }
             _places[0] = truck;
 
-            return true;
+            return 0;
         }
 
-        public bool Insert(T truck, int position)
+        public int Insert(T truck, int position)
         {
             if (_places[position] != null)
             {
@@ -50,7 +50,7 @@
                     }
                 }
                 if (!freeSpace)
-                    return false;
+                    return -1;
 
                 for (int i = firstFreeElement - 1; i > position; i--)
                 {
@@ -58,14 +58,18 @@
                 }
             }
             _places[position] = truck;
-            return true;
+            return position;
         }
 
-        public bool Remove(int position)
+        public T Remove(int position)
         {
             if (_places[position] != null)
+            {
+                T result = _places[position];
                 _places[position] = null;
-            return true;
+                return result;
+            } else
+                return null;
         }
 
         public T Get(int position)
