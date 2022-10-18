@@ -17,7 +17,7 @@
             int firstFreeElement = -1;
             for (int i = Count - 1; i >= 0; i--)
             {
-                if (_places[i] != null)
+                if (_places[i] == null)
                 {
                     freeSpace = true;
                     firstFreeElement = i;
@@ -41,9 +41,9 @@
             {
                 bool freeSpace = false;
                 int firstFreeElement = -1;
-                for (int i = Count; i < position; i--)
+                for (int i = Count - 1; i < position; i--)
                 {
-                    if (_places[i] != null)
+                    if (_places[i] == null)
                     {
                         freeSpace = true;
                         firstFreeElement = i;

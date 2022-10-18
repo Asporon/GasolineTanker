@@ -6,7 +6,7 @@
     {
         private readonly int _pictureWidth;
         private readonly int _pictureHeight;
-        private readonly int _placeSizeWidth = 210;
+        private readonly int _placeSizeWidth = 110;
         private readonly int _placeSizeHeight = 90;
         private readonly SetTrucksGeneric<T> _setTrucks;
         private readonly U _map;
@@ -21,13 +21,17 @@
             _map = map;
         }
 
-        public static int operator +(MapWithSetTrucksGeneric<T, U> map, T Truck)
+        public static bool operator +(MapWithSetTrucksGeneric<T, U> map, T truck)
         {
-            return map._setTrucks.Insert(Truck);
+            if (map._setTrucks.Insert(truck) >= 0)
+                return true;
+            else return false;
         }
         public static bool operator -(MapWithSetTrucksGeneric<T, U> map, int position)
         {
-            return map._setTrucks.Remove(position);
+            if (map._setTrucks.Remove(position) != null)
+                return true;
+            else return false;
         }
 
         public Bitmap ShowSet()
@@ -92,7 +96,7 @@
             Brush asphaltColor = new SolidBrush(Color.Gray);
             g.FillRectangle(asphaltColor, 0, 0, _pictureWidth, _pictureHeight);
             
-            Pen pen = new(Color.Black, 3);
+            Pen pen = new(Color.Yellow, 3);
             for (int i = 0; i < _pictureWidth / _placeSizeWidth; i++)
             {
                 for (int j = 0; j < _pictureHeight / _placeSizeHeight + 1; ++j)
@@ -104,10 +108,20 @@
         }
         private void DrawTrucks(Graphics g)
         {
+            int xStartPos = 10;
+            int yStartPos = (_pictureHeight / _placeSizeHeight - 1) * _placeSizeHeight + 5;
+            
             for (int i = 0; i < _setTrucks.Count; i++)
             {
-                // TODO установка позиции
+                _setTrucks.Get(i)?.SetObject(xStartPos, yStartPos, _pictureWidth, _pictureHeight);
                 _setTrucks.Get(i)?.DrawningObject(g);
+
+                xStartPos += _placeSizeWidth;
+                if (xStartPos + _placeSizeWidth > _pictureWidth)
+                {
+                    yStartPos -= _placeSizeHeight;
+                    xStartPos = 10;
+                }
             }
         }
     }

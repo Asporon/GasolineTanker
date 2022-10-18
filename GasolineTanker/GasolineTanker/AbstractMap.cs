@@ -74,7 +74,7 @@ namespace GasolineTanker
             {
                 for (int j = (int)(left / _size_x); j < (int)(right / _size_x) + 1; j++)
                 {
-                    if (_map[i, j] == _barrier)
+                    if (_map[j, i] == _barrier)
                         return false;
                 }
             }
