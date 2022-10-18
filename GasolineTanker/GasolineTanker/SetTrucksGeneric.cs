@@ -13,17 +13,33 @@
             _places = new List<T>();
         }
 
-        public bool Insert(T truck)
+        public int Insert(T truck)
         {
-
+            return Insert(truck, 0);
         }
 
-        public bool Insert(T truck, int position)
+        public int Insert(T truck, int position)
         {
+            if (position >= 0 && position <= _maxCount && position <= _places.Count && _places.Count + 1 <= _maxCount)
+            {
+                if (_places[position] == null)
+                {
+                    _places[position] = truck;
+                    return position;
+                } else
+                {
+                    for (int i = _places.Count - 1; i <= position; i--)
+                        _places[i] = _places[i + 1];
+                    
+                }
+                 
 
+            }
+            else 
+                return -1;
         }
 
-        public bool Remove(int position)
+        public T Remove(int position)
         {
 
         }
