@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBoxTool = new System.Windows.Forms.GroupBox();
+            this.groupBoxMaps = new System.Windows.Forms.GroupBox();
+            this.buttonDeleteMap = new System.Windows.Forms.Button();
+            this.listBoxMaps = new System.Windows.Forms.ListBox();
+            this.buttonAddMap = new System.Windows.Forms.Button();
+            this.textBoxNewMapName = new System.Windows.Forms.TextBox();
+            this.comboBoxSelectorMap = new System.Windows.Forms.ComboBox();
             this.buttonShowOnMap = new System.Windows.Forms.Button();
             this.buttonLeft = new System.Windows.Forms.Button();
             this.buttonRight = new System.Windows.Forms.Button();
@@ -38,14 +44,15 @@
             this.buttonRemoveTruck = new System.Windows.Forms.Button();
             this.maskedTextBoxPosition = new System.Windows.Forms.MaskedTextBox();
             this.buttonAddTruck = new System.Windows.Forms.Button();
-            this.comboBoxSelectorMap = new System.Windows.Forms.ComboBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.groupBoxTool.SuspendLayout();
+            this.groupBoxMaps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxTool
             // 
+            this.groupBoxTool.Controls.Add(this.groupBoxMaps);
             this.groupBoxTool.Controls.Add(this.buttonShowOnMap);
             this.groupBoxTool.Controls.Add(this.buttonLeft);
             this.groupBoxTool.Controls.Add(this.buttonRight);
@@ -55,7 +62,6 @@
             this.groupBoxTool.Controls.Add(this.buttonRemoveTruck);
             this.groupBoxTool.Controls.Add(this.maskedTextBoxPosition);
             this.groupBoxTool.Controls.Add(this.buttonAddTruck);
-            this.groupBoxTool.Controls.Add(this.comboBoxSelectorMap);
             this.groupBoxTool.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBoxTool.Location = new System.Drawing.Point(962, 0);
             this.groupBoxTool.Name = "groupBoxTool";
@@ -64,9 +70,72 @@
             this.groupBoxTool.TabStop = false;
             this.groupBoxTool.Text = "Инструменты";
             // 
+            // groupBoxMaps
+            // 
+            this.groupBoxMaps.Controls.Add(this.buttonDeleteMap);
+            this.groupBoxMaps.Controls.Add(this.listBoxMaps);
+            this.groupBoxMaps.Controls.Add(this.buttonAddMap);
+            this.groupBoxMaps.Controls.Add(this.textBoxNewMapName);
+            this.groupBoxMaps.Controls.Add(this.comboBoxSelectorMap);
+            this.groupBoxMaps.Location = new System.Drawing.Point(6, 26);
+            this.groupBoxMaps.Name = "groupBoxMaps";
+            this.groupBoxMaps.Size = new System.Drawing.Size(210, 294);
+            this.groupBoxMaps.TabIndex = 10;
+            this.groupBoxMaps.TabStop = false;
+            this.groupBoxMaps.Text = "Карты";
+            // 
+            // buttonDeleteMap
+            // 
+            this.buttonDeleteMap.Location = new System.Drawing.Point(5, 256);
+            this.buttonDeleteMap.Name = "buttonDeleteMap";
+            this.buttonDeleteMap.Size = new System.Drawing.Size(200, 30);
+            this.buttonDeleteMap.TabIndex = 13;
+            this.buttonDeleteMap.Text = "Удалить карту";
+            this.buttonDeleteMap.UseVisualStyleBackColor = true;
+            this.buttonDeleteMap.Click += new System.EventHandler(this.ButtonDeleteMap_Click);
+            // 
+            // listBoxMaps
+            // 
+            this.listBoxMaps.FormattingEnabled = true;
+            this.listBoxMaps.ItemHeight = 20;
+            this.listBoxMaps.Location = new System.Drawing.Point(6, 146);
+            this.listBoxMaps.Name = "listBoxMaps";
+            this.listBoxMaps.Size = new System.Drawing.Size(200, 104);
+            this.listBoxMaps.TabIndex = 12;
+            this.listBoxMaps.SelectedIndexChanged += new System.EventHandler(this.ListBoxMaps_SelectedIndexChanged);
+            // 
+            // buttonAddMap
+            // 
+            this.buttonAddMap.Location = new System.Drawing.Point(5, 110);
+            this.buttonAddMap.Name = "buttonAddMap";
+            this.buttonAddMap.Size = new System.Drawing.Size(200, 30);
+            this.buttonAddMap.TabIndex = 11;
+            this.buttonAddMap.Text = "Добавить карту";
+            this.buttonAddMap.UseVisualStyleBackColor = true;
+            this.buttonAddMap.Click += new System.EventHandler(this.ButtonAddMap_Click);
+            // 
+            // textBoxNewMapName
+            // 
+            this.textBoxNewMapName.Location = new System.Drawing.Point(5, 28);
+            this.textBoxNewMapName.Name = "textBoxNewMapName";
+            this.textBoxNewMapName.Size = new System.Drawing.Size(200, 27);
+            this.textBoxNewMapName.TabIndex = 1;
+            // 
+            // comboBoxSelectorMap
+            // 
+            this.comboBoxSelectorMap.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSelectorMap.FormattingEnabled = true;
+            this.comboBoxSelectorMap.Items.AddRange(new object[] {
+            "Простая карта",
+            "Нефтехранилище"});
+            this.comboBoxSelectorMap.Location = new System.Drawing.Point(5, 61);
+            this.comboBoxSelectorMap.Name = "comboBoxSelectorMap";
+            this.comboBoxSelectorMap.Size = new System.Drawing.Size(200, 28);
+            this.comboBoxSelectorMap.TabIndex = 0;
+            // 
             // buttonShowOnMap
             // 
-            this.buttonShowOnMap.Location = new System.Drawing.Point(10, 510);
+            this.buttonShowOnMap.Location = new System.Drawing.Point(11, 570);
             this.buttonShowOnMap.Name = "buttonShowOnMap";
             this.buttonShowOnMap.Size = new System.Drawing.Size(200, 30);
             this.buttonShowOnMap.TabIndex = 9;
@@ -122,7 +191,7 @@
             // 
             // buttonShowStorage
             // 
-            this.buttonShowStorage.Location = new System.Drawing.Point(10, 398);
+            this.buttonShowStorage.Location = new System.Drawing.Point(11, 486);
             this.buttonShowStorage.Name = "buttonShowStorage";
             this.buttonShowStorage.Size = new System.Drawing.Size(200, 30);
             this.buttonShowStorage.TabIndex = 4;
@@ -132,7 +201,7 @@
             // 
             // buttonRemoveTruck
             // 
-            this.buttonRemoveTruck.Location = new System.Drawing.Point(10, 350);
+            this.buttonRemoveTruck.Location = new System.Drawing.Point(11, 438);
             this.buttonRemoveTruck.Name = "buttonRemoveTruck";
             this.buttonRemoveTruck.Size = new System.Drawing.Size(200, 30);
             this.buttonRemoveTruck.TabIndex = 3;
@@ -142,7 +211,7 @@
             // 
             // maskedTextBoxPosition
             // 
-            this.maskedTextBoxPosition.Location = new System.Drawing.Point(10, 317);
+            this.maskedTextBoxPosition.Location = new System.Drawing.Point(11, 405);
             this.maskedTextBoxPosition.Name = "maskedTextBoxPosition";
             this.maskedTextBoxPosition.Size = new System.Drawing.Size(200, 27);
             this.maskedTextBoxPosition.TabIndex = 2;
@@ -150,26 +219,13 @@
             // 
             // buttonAddTruck
             // 
-            this.buttonAddTruck.Location = new System.Drawing.Point(10, 281);
+            this.buttonAddTruck.Location = new System.Drawing.Point(11, 369);
             this.buttonAddTruck.Name = "buttonAddTruck";
             this.buttonAddTruck.Size = new System.Drawing.Size(200, 30);
             this.buttonAddTruck.TabIndex = 1;
             this.buttonAddTruck.Text = "Добавить грузовик";
             this.buttonAddTruck.UseVisualStyleBackColor = true;
             this.buttonAddTruck.Click += new System.EventHandler(this.ButtonAddTruck_Click);
-            // 
-            // comboBoxSelectorMap
-            // 
-            this.comboBoxSelectorMap.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxSelectorMap.FormattingEnabled = true;
-            this.comboBoxSelectorMap.Items.AddRange(new object[] {
-            "Простая карта",
-            "Нефтехранилище"});
-            this.comboBoxSelectorMap.Location = new System.Drawing.Point(10, 35);
-            this.comboBoxSelectorMap.Name = "comboBoxSelectorMap";
-            this.comboBoxSelectorMap.Size = new System.Drawing.Size(200, 28);
-            this.comboBoxSelectorMap.TabIndex = 0;
-            this.comboBoxSelectorMap.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSelectorMap_SelectedIndexChanged);
             // 
             // pictureBox
             // 
@@ -192,6 +248,8 @@
             this.Text = "Карта с набором объектов";
             this.groupBoxTool.ResumeLayout(false);
             this.groupBoxTool.PerformLayout();
+            this.groupBoxMaps.ResumeLayout(false);
+            this.groupBoxMaps.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 
@@ -211,5 +269,10 @@
         private ComboBox comboBoxSelectorMap;
         private PictureBox pictureBox;
         private Button buttonShowOnMap;
+        private GroupBox groupBoxMaps;
+        private Button buttonDeleteMap;
+        private ListBox listBoxMaps;
+        private Button buttonAddMap;
+        private TextBox textBoxNewMapName;
     }
 }

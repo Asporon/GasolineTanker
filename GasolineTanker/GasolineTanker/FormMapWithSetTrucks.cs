@@ -13,39 +13,81 @@ namespace GasolineTanker
 {
     public partial class FormMapWithSetTrucks : Form
     {
-        private MapWithSetTrucksGeneric<DrawningObjectTruck, AbstractMap> _mapTrucksCollectionGeneric;
+        private readonly Dictionary<string, AbstractMap> _mapsDict = new()
+        {
+            { "Простая карта", new SimpleMap() }
+        };
+        private readonly MapsCollection _mapsCollection;
 
         public FormMapWithSetTrucks()
         {
             InitializeComponent();
+            _mapsCollection = new MapsCollection(pictureBox.Width, pictureBox.Height);
+            comboBoxSelectorMap.Items.Clear();
+            foreach (var elem in _mapsDict)
+            {
+                comboBoxSelectorMap.Items.Add(elem.Key);
+            }
         }
 
-        private void ComboBoxSelectorMap_SelectedIndexChanged(object sender, EventArgs e)
+        private void ReloadMaps()
         {
-            AbstractMap map = null;
-            switch (comboBoxSelectorMap.Text)
+            int index = listBoxMaps.SelectedIndex;
+
+            listBoxMaps.Items.Clear();
+            for (int i = 0; i < _mapsCollection.Keys.Count; i++)
             {
-                case "Простая карта":
-                    map = new SimpleMap();
-                    break;
-                case "Нефтехранилище":
-                    map = new OilStorageMap();
-                    break;
+                listBoxMaps.Items.Add(_mapsCollection.Keys[i]);
             }
-            if (map != null)
+
+            if (listBoxMaps.Items.Count > 0 && (index == -1 || index >= listBoxMaps.Items.Count))
             {
-                _mapTrucksCollectionGeneric = new MapWithSetTrucksGeneric<DrawningObjectTruck, AbstractMap>(
-                    pictureBox.Width, pictureBox.Height, map);
+                listBoxMaps.SelectedIndex = 0;
             }
-            else
+            else if (listBoxMaps.Items.Count > 0 && index > -1 && index < listBoxMaps.Items.Count)
             {
-                _mapTrucksCollectionGeneric = null;
+                listBoxMaps.SelectedIndex = index;
+            }
+        }
+
+        private void ButtonAddMap_Click(object sender, EventArgs e)
+        {
+            if (comboBoxSelectorMap.SelectedIndex == -1 || string.IsNullOrEmpty(textBoxNewMapName.Text))
+            {
+                MessageBox.Show("Не все данные заполнены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!_mapsDict.ContainsKey(comboBoxSelectorMap.Text))
+            {
+                MessageBox.Show("Нет такой карты", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            _mapsCollection.AddMap(textBoxNewMapName.Text, _mapsDict[comboBoxSelectorMap.Text]);
+            ReloadMaps();
+        }
+
+        private void ListBoxMaps_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+        }
+
+        private void ButtonDeleteMap_Click(object sender, EventArgs e)
+        {
+            if (listBoxMaps.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            if (MessageBox.Show($"Удалить карту {listBoxMaps.SelectedItem}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                _mapsCollection.DelMap(listBoxMaps.SelectedItem?.ToString() ?? string.Empty);
+                ReloadMaps();
             }
         }
 
         private void ButtonAddTruck_Click(object sender, EventArgs e)
         {
-            if (_mapTrucksCollectionGeneric == null)
+            if (listBoxMaps.SelectedIndex == -1)
             {
                 return;
             }
@@ -53,10 +95,10 @@ namespace GasolineTanker
             if (form.ShowDialog() == DialogResult.OK)
             {
                 DrawningObjectTruck truck = new(form.SelectedTruck);
-                if (_mapTrucksCollectionGeneric + truck)
+                if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] + truck)
                 {
                     MessageBox.Show("Объект добавлен");
-                    pictureBox.Image = _mapTrucksCollectionGeneric.ShowSet();
+                    pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
                 }
                 else
                 {
@@ -67,6 +109,10 @@ namespace GasolineTanker
 
         private void ButtonRemoveTruck_Click(object sender, EventArgs e)
         {
+            if (listBoxMaps.SelectedIndex == -1)
+            {
+                return;
+            }
             if (string.IsNullOrEmpty(maskedTextBoxPosition.Text))
             {
                 return;
@@ -76,10 +122,10 @@ namespace GasolineTanker
                 return;
             }
             int pos = Convert.ToInt32(maskedTextBoxPosition.Text);
-            if (_mapTrucksCollectionGeneric - pos)
+            if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] - pos)
             {
                 MessageBox.Show("Объект удален");
-                pictureBox.Image = _mapTrucksCollectionGeneric.ShowSet();
+                pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
             }
             else
             {
@@ -89,25 +135,25 @@ namespace GasolineTanker
 
         private void ButtonShowStorage_Click(object sender, EventArgs e)
         {
-            if (_mapTrucksCollectionGeneric == null)
+            if (listBoxMaps.SelectedIndex == -1)
             {
                 return;
             }
-            pictureBox.Image = _mapTrucksCollectionGeneric.ShowSet();
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
         }
 
         private void ButtonShowOnMap_Click(object sender, EventArgs e)
         {
-            if (_mapTrucksCollectionGeneric == null)
+            if (listBoxMaps.SelectedIndex == -1)
             {
                 return;
             }
-            pictureBox.Image = _mapTrucksCollectionGeneric.ShowOnMap();
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowOnMap();
         }
 
         private void ButtonMove_Click(object sender, EventArgs e)
         {
-            if (_mapTrucksCollectionGeneric == null)
+            if (listBoxMaps.SelectedIndex == -1)
             {
                 return;
             }
@@ -128,7 +174,7 @@ namespace GasolineTanker
                     dir = Direction.Right;
                     break;
             }
-            pictureBox.Image = _mapTrucksCollectionGeneric.MoveObject(dir);
+            _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].MoveObject(dir);
         }
     }
 }

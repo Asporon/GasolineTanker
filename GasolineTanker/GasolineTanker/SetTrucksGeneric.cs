@@ -3,76 +3,58 @@
     internal class SetTrucksGeneric<T>
         where T : class
     {
-		private readonly T[] _places;
-        public int Count => _places.Length;
+		private readonly List<T> _places;
+        public int Count => _places.Count;
+        private readonly int _maxCount;
 
         public SetTrucksGeneric(int count)
         {
-            _places = new T[count];
+            _maxCount = count;
+            _places = new List<T>();
         }
 
         public bool Insert(T truck)
         {
-            bool freeSpace = false;
-            int firstFreeElement = -1;
-            for (int i = Count - 1; i >= 0; i--)
-            {
-                if (_places[i] != null)
-                {
-                    freeSpace = true;
-                    firstFreeElement = i;
-                }
-            }
-            if (!freeSpace)
-                return false;
 
-            for (int i = firstFreeElement - 1; i >= 0; i--)
-            {
-                _places[i + 1] = _places[i];
-            }
-            _places[0] = truck;
-
-            return true;
         }
 
         public bool Insert(T truck, int position)
         {
-            if (_places[position] != null)
-            {
-                bool freeSpace = false;
-                int firstFreeElement = -1;
-                for (int i = Count; i < position; i--)
-                {
-                    if (_places[i] != null)
-                    {
-                        freeSpace = true;
-                        firstFreeElement = i;
-                    }
-                }
-                if (!freeSpace)
-                    return false;
 
-                for (int i = firstFreeElement - 1; i > position; i--)
-                {
-                    _places[i + 1] = _places[i];
-                }
-            }
-            _places[position] = truck;
-            return true;
         }
 
         public bool Remove(int position)
         {
-            if (_places[position] != null)
-                _places[position] = null;
-            return true;
+
         }
 
-        public T Get(int position)
+        public T this[int position]
         {
-            if (_places[position] != null)
+            get
+            {
+                // TODO проверка позиции
                 return _places[position];
-            else return null;
+            }
+            set
+            {
+                // TODO проверка позиции
+                // TODO вставка в список по позиции
+            }
+        }
+
+        public IEnumerable<T> GetTrucks()
+        {
+            foreach (var truck in _places)
+            {
+                if (truck != null)
+                {
+                    yield return truck;
+                }
+                else
+                {
+                    yield break;
+                }
+            }
         }
     }
 }

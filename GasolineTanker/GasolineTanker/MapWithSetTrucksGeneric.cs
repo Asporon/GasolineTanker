@@ -6,8 +6,8 @@
     {
         private readonly int _pictureWidth;
         private readonly int _pictureHeight;
-        private readonly int _placeSizeWidth = 210;
-        private readonly int _placeSizeHeight = 90;
+        private readonly int _placeSizeWidth = 90;
+        private readonly int _placeSizeHeight = 80;
         private readonly SetTrucksGeneric<T> _setTrucks;
         private readonly U _map;
 
@@ -42,13 +42,9 @@
         public Bitmap ShowOnMap()
         {
             Shaking();
-            for (int i = 0; i < _setTrucks.Count; i++)
+            foreach (var truck in _setTrucks.GetTrucks())
             {
-                var Truck = _setTrucks.Get(i);
-                if (Truck != null)
-                {
-                    return _map.CreateMap(_pictureWidth, _pictureHeight, Truck);
-                }
+                return _map.CreateMap(_pictureWidth, _pictureHeight, truck);
             }
             return new(_pictureWidth, _pictureHeight);
         }
@@ -67,11 +63,11 @@
             int j = _setTrucks.Count - 1;
             for (int i = 0; i < _setTrucks.Count; i++)
             {
-                if (_setTrucks.Get(i) == null)
+                if (_setTrucks[i] == null)
                 {
                     for (; j > i; j--)
                     {
-                        var Truck = _setTrucks.Get(j);
+                        var Truck = _setTrucks[j];
                         if (Truck != null)
                         {
                             _setTrucks.Insert(Truck, i);
@@ -101,10 +97,10 @@
         }
         private void DrawTrucks(Graphics g)
         {
-            for (int i = 0; i < _setTrucks.Count; i++)
+            foreach (var truck in _setTrucks.GetTrucks())
             {
                 // TODO установка позиции
-                _setTrucks.Get(i)?.DrawningObject(g);
+                truck.DrawningObject(g);
             }
         }
     }
