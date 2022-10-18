@@ -13,32 +13,66 @@
 
         public bool Insert(T truck)
         {
-            // TODO вставка в начало набора
+            bool freeSpace = false;
+            int firstFreeElement = -1;
+            for (int i = Count - 1; i >= 0; i--)
+            {
+                if (_places[i] != null)
+                {
+                    freeSpace = true;
+                    firstFreeElement = i;
+                }
+            }
+            if (!freeSpace)
+                return false;
+
+            for (int i = firstFreeElement - 1; i >= 0; i--)
+            {
+                _places[i + 1] = _places[i];
+            }
+            _places[0] = truck;
+
             return true;
         }
 
         public bool Insert(T truck, int position)
         {
-            // TODO проверка позиции
-            // TODO проверка, что элемент массива по этой позиции пустой, если нет, то
-            //		проверка, что после вставляемого элемента в массиве есть пустой элемент
-            //		сдвиг всех объектов, находящихся справа от позиции до первого пустого элемента
-            // TODO вставка по позиции
+            if (_places[position] != null)
+            {
+                bool freeSpace = false;
+                int firstFreeElement = -1;
+                for (int i = Count; i < position; i--)
+                {
+                    if (_places[i] != null)
+                    {
+                        freeSpace = true;
+                        firstFreeElement = i;
+                    }
+                }
+                if (!freeSpace)
+                    return false;
+
+                for (int i = firstFreeElement - 1; i > position; i--)
+                {
+                    _places[i + 1] = _places[i];
+                }
+            }
             _places[position] = truck;
             return true;
         }
 
         public bool Remove(int position)
         {
-            // TODO проверка позиции
-            // TODO удаление объекта из массива, присовив элементу массива значение null
+            if (_places[position] != null)
+                _places[position] = null;
             return true;
         }
 
         public T Get(int position)
         {
-            // TODO проверка позиции
-            return _places[position];
+            if (_places[position] != null)
+                return _places[position];
+            else return null;
         }
     }
 }
