@@ -21,13 +21,17 @@
             _map = map;
         }
 
-        public static bool operator +(MapWithSetTrucksGeneric<T, U> map, T Truck)
+        public static bool operator +(MapWithSetTrucksGeneric<T, U> map, T truck)
         {
-            return map._setTrucks.Insert(Truck);
+            if (map._setTrucks.Insert(truck) >= 0)
+                return true;
+            else return false;
         }
         public static bool operator -(MapWithSetTrucksGeneric<T, U> map, int position)
         {
-            return map._setTrucks.Remove(position);
+            if (map._setTrucks.Remove(position) != null)
+                return true;
+            else return false;
         }
 
         public Bitmap ShowSet()

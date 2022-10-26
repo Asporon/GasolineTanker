@@ -1,4 +1,6 @@
-﻿namespace GasolineTanker
+﻿using System.Xml.Linq;
+
+namespace GasolineTanker
 {
     internal class MapsCollection
     {
@@ -17,18 +19,28 @@
 
         public void AddMap(string name, AbstractMap map)
         {
-            // TODO Прописать логику для добавления
+            if (!Keys.Contains(name)) {
+                Keys.Add(name);
+                _mapStorages.Add(name, new MapWithSetTrucksGeneric<DrawningObjectTruck, AbstractMap>
+                    (_pictureWidth, _pictureHeight, map));
+            }
         }
         public void DelMap(string name)
         {
-            // TODO Прописать логику для удаления
+            if (Keys.Contains(name))
+            {
+                Keys.Remove(name);
+                _mapStorages.Remove(name);
+            }
         }
         public MapWithSetTrucksGeneric<DrawningObjectTruck, AbstractMap> this[string ind]
         {
             get
             {
-                // TODO Продумать логику получения объекта
-                return null;
+                if (Keys.Contains(ind))
+                    return _mapStorages[ind];
+                else
+                    return null;
             }
         }
     }
