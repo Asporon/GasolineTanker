@@ -6,8 +6,8 @@
     {
         private readonly int _pictureWidth;
         private readonly int _pictureHeight;
-        private readonly int _placeSizeWidth = 90;
-        private readonly int _placeSizeHeight = 80;
+        private readonly int _placeSizeWidth = 110;
+        private readonly int _placeSizeHeight = 90;
         private readonly SetTrucksGeneric<T> _setTrucks;
         private readonly U _map;
 
@@ -89,7 +89,10 @@
 
         private void DrawBackground(Graphics g)
         {
-            Pen pen = new(Color.Black, 3);
+            Brush asphaltColor = new SolidBrush(Color.Gray);
+            g.FillRectangle(asphaltColor, 0, 0, _pictureWidth, _pictureHeight);
+
+            Pen pen = new(Color.Yellow, 3);
             for (int i = 0; i < _pictureWidth / _placeSizeWidth; i++)
             {
                 for (int j = 0; j < _pictureHeight / _placeSizeHeight + 1; ++j)

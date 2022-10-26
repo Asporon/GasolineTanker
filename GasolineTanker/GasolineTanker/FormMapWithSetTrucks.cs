@@ -15,7 +15,8 @@ namespace GasolineTanker
     {
         private readonly Dictionary<string, AbstractMap> _mapsDict = new()
         {
-            { "Простая карта", new SimpleMap() }
+            { "Простая карта", new SimpleMap() },
+            { "Нефтехранилище", new OilStorageMap() }
         };
         private readonly MapsCollection _mapsCollection;
 
