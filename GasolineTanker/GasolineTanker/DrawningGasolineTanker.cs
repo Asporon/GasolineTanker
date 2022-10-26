@@ -35,7 +35,9 @@ namespace GasolineTanker
                 g.FillRectangle(brOrange, _startPosX + 50, _startPosY, 9, 8);
             }
 
+            _startPosY += 5;
             base.DrawTransport(g);
+            _startPosY -= 5;
         }
     }
 }
