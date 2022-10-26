@@ -15,46 +15,50 @@
 
         public int Insert(T truck)
         {
-            return Insert(truck, 0);
+            if (_places.Count + 1 <= _maxCount)
+            {
+                _places.Insert(0, truck);
+                return 0;
+            }
+            else
+                return -1;
         }
 
         public int Insert(T truck, int position)
         {
-            if (position >= 0 && position <= _maxCount && position <= _places.Count && _places.Count + 1 <= _maxCount)
+            if (position <= _places.Count && _places.Count + 1 <= _maxCount)
             {
-                if (_places[position] == null)
-                {
-                    _places[position] = truck;
-                    return position;
-                } else
-                {
-                    for (int i = _places.Count - 1; i <= position; i--)
-                        _places[i] = _places[i + 1];
-                    
-                }
-                 
-
+                _places.Insert(position, truck); 
+                return position;
             }
-            else 
+            else
                 return -1;
         }
 
         public T Remove(int position)
         {
-
+            if (position < _places.Count)
+            {
+                var truck = _places[position];
+                _places.RemoveAt(position);       
+                return truck;
+            }
+            else
+                return null;
         }
 
         public T this[int position]
         {
             get
             {
-                // TODO проверка позиции
-                return _places[position];
+                if (position < _places.Count)
+                    return _places[position];
+                else
+                    throw new Exception("IndexOutOfRangeException");
             }
             set
             {
-                // TODO проверка позиции
-                // TODO вставка в список по позиции
+                Insert(value, position);
             }
         }
 

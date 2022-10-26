@@ -97,10 +97,20 @@
         }
         private void DrawTrucks(Graphics g)
         {
+            int xStartPos = 10;
+            int yStartPos = (_pictureHeight / _placeSizeHeight - 1) * _placeSizeHeight + 5;
+
             foreach (var truck in _setTrucks.GetTrucks())
             {
-                // TODO установка позиции
+                truck.SetObject(xStartPos, yStartPos, _pictureWidth, _pictureHeight);
                 truck.DrawningObject(g);
+
+                xStartPos += _placeSizeWidth;
+                if (xStartPos + _placeSizeWidth > _pictureWidth)
+                {
+                    yStartPos -= _placeSizeHeight;
+                    xStartPos = 10;
+                }
             }
         }
     }
