@@ -29,10 +29,10 @@ namespace GasolineTanker
 
             if (gasolineTanker.Flasher)
             {
-                g.FillRectangle(brDarkGray, _startPosX + 55, _startPosY + 8, 5, 37);
+                g.FillRectangle(brDarkGray, _startPosX + 52, _startPosY + 8, 5, 37);
 
                 Brush brOrange = new SolidBrush(Color.FromArgb(255, 140, 0));
-                g.FillRectangle(brOrange, _startPosX + 53, _startPosY, 9, 8);
+                g.FillRectangle(brOrange, _startPosX + 50, _startPosY, 9, 8);
             }
 
             _startPosY += 5;
