@@ -96,7 +96,7 @@ namespace GasolineTanker
             if (form.ShowDialog() == DialogResult.OK)
             {
                 DrawningObjectTruck truck = new(form.SelectedTruck);
-                if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] + truck)
+                if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] + truck >= 0)
                 {
                     MessageBox.Show("Объект добавлен");
                     pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
@@ -123,7 +123,7 @@ namespace GasolineTanker
                 return;
             }
             int pos = Convert.ToInt32(maskedTextBoxPosition.Text);
-            if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] - pos)
+            if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] - pos != null)
             {
                 MessageBox.Show("Объект удален");
                 pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
@@ -175,7 +175,7 @@ namespace GasolineTanker
                     dir = Direction.Right;
                     break;
             }
-            _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].MoveObject(dir);
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].MoveObject(dir);
         }
     }
 }
