@@ -103,12 +103,20 @@ namespace GasolineTanker
 
         private void LabelBaseColor_DragDrop(object sender, DragEventArgs e)
         {
+            //Fix
             _truck = new DrawningTruck((int)numericUpDownSpeed.Value, (int)numericUpDownWeight.Value, (Color)e.Data.GetData(typeof(Color)));
+            DrawTruck();
         }
 
         private void LabelDopColor_DragDrop(object sender, DragEventArgs e)
         {
-            // TODO Call method from object _car if _car is DrawningSportCar and set dop color
+            //Fix
+            if (_truck is DrawningGasolineTanker gasolineTanker)
+            {
+                _truck = new DrawningGasolineTanker((int)numericUpDownSpeed.Value, (int)numericUpDownWeight.Value,
+                    Color.White, (Color)e.Data.GetData(typeof(Color)), checkBoxCistern.Checked, checkBoxFlasher.Checked);
+            }
+            DrawTruck();
         }
 
         private void ButtonOk_Click(object sender, EventArgs e)
