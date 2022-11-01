@@ -28,7 +28,7 @@ namespace GasolineTanker
             panelYellow.MouseDown += PanelColor_MouseDown;
             panelBlue.MouseDown += PanelColor_MouseDown;
 
-            //
+            buttonCancel.Click += (s, e) => Close();
         }
 
         private void DrawTruck()
@@ -103,7 +103,7 @@ namespace GasolineTanker
 
         private void LabelBaseColor_DragDrop(object sender, DragEventArgs e)
         {
-            // TODO Call method from object _car and set color
+            _truck = new DrawningTruck((int)numericUpDownSpeed.Value, (int)numericUpDownWeight.Value, (Color)e.Data.GetData(typeof(Color)));
         }
 
         private void LabelDopColor_DragDrop(object sender, DragEventArgs e)

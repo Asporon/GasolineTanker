@@ -88,24 +88,9 @@ namespace GasolineTanker
 
         private void ButtonAddTruck_Click(object sender, EventArgs e)
         {
-            if (listBoxMaps.SelectedIndex == -1)
-            {
-                return;
-            }
-            FormTruck form = new();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                DrawningObjectTruck truck = new(form.SelectedTruck);
-                if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] + truck >= 0)
-                {
-                    MessageBox.Show("Объект добавлен");
-                    pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
-                }
-                else
-                {
-                    MessageBox.Show("Не удалось добавить объект");
-                }
-            }
+            var formTruckConfig = new FormTruckConfig();
+            // TODO Call method AddEvent from formCarConfig
+            formTruckConfig.Show();
         }
 
         private void ButtonRemoveTruck_Click(object sender, EventArgs e)

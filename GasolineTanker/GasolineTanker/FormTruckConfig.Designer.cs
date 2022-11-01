@@ -302,9 +302,12 @@
             this.labelDopColor.TabIndex = 3;
             this.labelDopColor.Text = "Доп. цвет";
             this.labelDopColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelDopColor.DragDrop += new System.Windows.Forms.DragEventHandler(this.LabelDopColor_DragDrop);
+            this.labelDopColor.DragEnter += new System.Windows.Forms.DragEventHandler(this.LabelBaseColor_DragEnter);
             // 
             // labelBaseColor
             // 
+            this.labelBaseColor.AllowDrop = true;
             this.labelBaseColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelBaseColor.Location = new System.Drawing.Point(17, 15);
             this.labelBaseColor.Name = "labelBaseColor";
@@ -312,6 +315,8 @@
             this.labelBaseColor.TabIndex = 2;
             this.labelBaseColor.Text = "Цвет";
             this.labelBaseColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelBaseColor.DragDrop += new System.Windows.Forms.DragEventHandler(this.LabelBaseColor_DragDrop);
+            this.labelBaseColor.DragEnter += new System.Windows.Forms.DragEventHandler(this.LabelBaseColor_DragEnter);
             // 
             // buttonOK
             // 
