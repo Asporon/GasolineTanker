@@ -15,5 +15,7 @@ namespace GasolineTanker
             Сistern = cistern;
             Flasher = flasher;
         }
+
+        public void ChangeDopColor(Color newBaseColor) { DopColor = newBaseColor; }
     }
 }

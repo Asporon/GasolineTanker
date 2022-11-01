@@ -14,5 +14,7 @@
             Weight = weight <= 0 ? rnd.Next(40, 70) : weight;
             BodyColor = bodyColor;
         }
+
+        public void ChangeBaseColor(Color newBaseColor) { BodyColor = newBaseColor; }
     }
 }

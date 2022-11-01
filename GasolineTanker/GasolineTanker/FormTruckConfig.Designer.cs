@@ -349,6 +349,7 @@
             this.Controls.Add(this.panelObject);
             this.Controls.Add(this.groupBoxConfig);
             this.Name = "FormTruckConfig";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Создание объекта";
             this.groupBoxConfig.ResumeLayout(false);
             this.groupBoxConfig.PerformLayout();

@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace GasolineTanker
 {
     public partial class FormTruckConfig : Form
     {
         DrawningTruck _truck = null;
-        private event TruckDelegate EventAddTruck;
+        private event Action<DrawningTruck> EventAddTruck;
 
         public FormTruckConfig()
         {
@@ -40,11 +41,11 @@ namespace GasolineTanker
             pictureBoxObject.Image = bmp;
         }
 
-        public void AddEvent(TruckDelegate ev)
+        public void AddEvent(Action<DrawningTruck> ev)
         {
             if (EventAddTruck == null)
             {
-                EventAddTruck = new TruckDelegate(ev);
+                EventAddTruck = new Action<DrawningTruck>(ev);
             }
             else
             {
@@ -103,20 +104,17 @@ namespace GasolineTanker
 
         private void LabelBaseColor_DragDrop(object sender, DragEventArgs e)
         {
-            //Fix
-            _truck = new DrawningTruck((int)numericUpDownSpeed.Value, (int)numericUpDownWeight.Value, (Color)e.Data.GetData(typeof(Color)));
+            _truck?.Truck.ChangeBaseColor((Color)e.Data.GetData(typeof(Color)));
             DrawTruck();
         }
 
         private void LabelDopColor_DragDrop(object sender, DragEventArgs e)
         {
-            //Fix
-            if (_truck is DrawningGasolineTanker gasolineTanker)
+            if (_truck?.Truck is EntityGasolineTanker gasolineTanker)
             {
-                _truck = new DrawningGasolineTanker((int)numericUpDownSpeed.Value, (int)numericUpDownWeight.Value,
-                    Color.White, (Color)e.Data.GetData(typeof(Color)), checkBoxCistern.Checked, checkBoxFlasher.Checked);
+                gasolineTanker.ChangeDopColor((Color)e.Data.GetData(typeof(Color)));
+                DrawTruck();
             }
-            DrawTruck();
         }
 
         private void ButtonOk_Click(object sender, EventArgs e)
