@@ -15,18 +15,12 @@
 
         public int Insert(T truck)
         {
-            if (_places.Count + 1 <= _maxCount)
-            {
-                _places.Insert(0, truck);
-                return 0;
-            }
-            else
-                return -1;
+            return Insert(truck, 0);
         }
 
         public int Insert(T truck, int position)
         {
-            if (position <= _places.Count && _places.Count + 1 <= _maxCount)
+            if (position <= _places.Count && _places.Count < _maxCount && position >= 0)
             {
                 _places.Insert(position, truck); 
                 return position;
@@ -37,7 +31,7 @@
 
         public T Remove(int position)
         {
-            if (position < _places.Count)
+            if (position < _places.Count && position >= 0)
             {
                 var truck = _places[position];
                 _places.RemoveAt(position);       
@@ -51,10 +45,10 @@
         {
             get
             {
-                if (position < _places.Count)
+                if (position < _places.Count && position >= 0)
                     return _places[position];
                 else
-                    throw new Exception("IndexOutOfRangeException");
+                    return null;
             }
             set
             {

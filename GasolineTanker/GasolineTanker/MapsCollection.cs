@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Linq;
+using System.Xml.Linq;
 
 namespace GasolineTanker
 {
@@ -19,25 +20,21 @@ namespace GasolineTanker
 
         public void AddMap(string name, AbstractMap map)
         {
-            if (!Keys.Contains(name)) {
-                Keys.Add(name);
+            if (!_mapStorages.ContainsKey(name)) {
                 _mapStorages.Add(name, new MapWithSetTrucksGeneric<DrawningObjectTruck, AbstractMap>
                     (_pictureWidth, _pictureHeight, map));
             }
         }
         public void DelMap(string name)
         {
-            if (Keys.Contains(name))
-            {
-                Keys.Remove(name);
-                _mapStorages.Remove(name);
-            }
+            if (_mapStorages.ContainsKey(name))
+                _mapStorages.Remove(name); 
         }
         public MapWithSetTrucksGeneric<DrawningObjectTruck, AbstractMap> this[string ind]
         {
             get
             {
-                if (Keys.Contains(ind))
+                if (_mapStorages.ContainsKey(ind))
                     return _mapStorages[ind];
                 else
                     return null;
