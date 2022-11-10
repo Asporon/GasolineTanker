@@ -53,7 +53,7 @@ namespace GasolineTanker
             if (form.ShowDialog() == DialogResult.OK)
             {
                 DrawningObjectTruck truck = new(form.SelectedTruck);
-                if (_mapTrucksCollectionGeneric + truck)
+                if (_mapTrucksCollectionGeneric + truck >= 0)
                 {
                     MessageBox.Show("Объект добавлен");
                     pictureBox.Image = _mapTrucksCollectionGeneric.ShowSet();
@@ -76,7 +76,7 @@ namespace GasolineTanker
                 return;
             }
             int pos = Convert.ToInt32(maskedTextBoxPosition.Text);
-            if (_mapTrucksCollectionGeneric - pos)
+            if (_mapTrucksCollectionGeneric - pos != null)
             {
                 MessageBox.Show("Объект удален");
                 pictureBox.Image = _mapTrucksCollectionGeneric.ShowSet();

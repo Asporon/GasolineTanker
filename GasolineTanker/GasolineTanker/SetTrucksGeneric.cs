@@ -13,26 +13,7 @@
 
         public int Insert(T truck)
         {
-            bool freeSpace = false;
-            int firstFreeElement = -1;
-            for (int i = Count - 1; i >= 0; i--)
-            {
-                if (_places[i] == null)
-                {
-                    freeSpace = true;
-                    firstFreeElement = i;
-                }
-            }
-            if (!freeSpace)
-                return -1;
-
-            for (int i = firstFreeElement - 1; i >= 0; i--)
-            {
-                _places[i + 1] = _places[i];
-            }
-            _places[0] = truck;
-
-            return 0;
+            return Insert(truck, 0);
         }
 
         public int Insert(T truck, int position)
@@ -41,7 +22,7 @@
             {
                 bool freeSpace = false;
                 int firstFreeElement = -1;
-                for (int i = Count - 1; i < position; i--)
+                for (int i = Count - 1; i >= position; i--)
                 {
                     if (_places[i] == null)
                     {
@@ -52,7 +33,7 @@
                 if (!freeSpace)
                     return -1;
 
-                for (int i = firstFreeElement - 1; i > position; i--)
+                for (int i = firstFreeElement - 1; i >= position; i--)
                 {
                     _places[i + 1] = _places[i];
                 }
