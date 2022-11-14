@@ -45,9 +45,16 @@
             this.maskedTextBoxPosition = new System.Windows.Forms.MaskedTextBox();
             this.buttonAddTruck = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.groupBoxTool.SuspendLayout();
             this.groupBoxMaps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxTool
@@ -63,9 +70,9 @@
             this.groupBoxTool.Controls.Add(this.maskedTextBoxPosition);
             this.groupBoxTool.Controls.Add(this.buttonAddTruck);
             this.groupBoxTool.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBoxTool.Location = new System.Drawing.Point(962, 0);
+            this.groupBoxTool.Location = new System.Drawing.Point(962, 28);
             this.groupBoxTool.Name = "groupBoxTool";
-            this.groupBoxTool.Size = new System.Drawing.Size(220, 753);
+            this.groupBoxTool.Size = new System.Drawing.Size(220, 725);
             this.groupBoxTool.TabIndex = 0;
             this.groupBoxTool.TabStop = false;
             this.groupBoxTool.Text = "Инструменты";
@@ -147,7 +154,7 @@
             // 
             this.buttonLeft.BackgroundImage = global::GasolineTanker.Properties.Resources.arrowLeft;
             this.buttonLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonLeft.Location = new System.Drawing.Point(50, 700);
+            this.buttonLeft.Location = new System.Drawing.Point(48, 672);
             this.buttonLeft.Name = "buttonLeft";
             this.buttonLeft.Size = new System.Drawing.Size(40, 40);
             this.buttonLeft.TabIndex = 8;
@@ -159,7 +166,7 @@
             this.buttonRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRight.BackgroundImage = global::GasolineTanker.Properties.Resources.arrowRight;
             this.buttonRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonRight.Location = new System.Drawing.Point(140, 700);
+            this.buttonRight.Location = new System.Drawing.Point(140, 672);
             this.buttonRight.Name = "buttonRight";
             this.buttonRight.Size = new System.Drawing.Size(40, 40);
             this.buttonRight.TabIndex = 7;
@@ -170,7 +177,7 @@
             // 
             this.buttonDown.BackgroundImage = global::GasolineTanker.Properties.Resources.arrowDown;
             this.buttonDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonDown.Location = new System.Drawing.Point(95, 700);
+            this.buttonDown.Location = new System.Drawing.Point(94, 672);
             this.buttonDown.Name = "buttonDown";
             this.buttonDown.Size = new System.Drawing.Size(40, 40);
             this.buttonDown.TabIndex = 6;
@@ -182,7 +189,7 @@
             this.buttonUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonUp.BackgroundImage = global::GasolineTanker.Properties.Resources.arrowUp;
             this.buttonUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonUp.Location = new System.Drawing.Point(95, 655);
+            this.buttonUp.Location = new System.Drawing.Point(95, 627);
             this.buttonUp.Name = "buttonUp";
             this.buttonUp.Size = new System.Drawing.Size(40, 40);
             this.buttonUp.TabIndex = 5;
@@ -230,11 +237,53 @@
             // pictureBox
             // 
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox.Location = new System.Drawing.Point(0, 28);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(962, 753);
+            this.pictureBox.Size = new System.Drawing.Size(962, 725);
             this.pictureBox.TabIndex = 9;
             this.pictureBox.TabStop = false;
+            // 
+            // menuStrip
+            // 
+            this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FileToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(1182, 28);
+            this.menuStrip.TabIndex = 10;
+            this.menuStrip.Text = "menuStrip1";
+            // 
+            // FileToolStripMenuItem
+            // 
+            this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SaveToolStripMenuItem,
+            this.LoadToolStripMenuItem});
+            this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.FileToolStripMenuItem.Text = "Файл";
+            // 
+            // SaveToolStripMenuItem
+            // 
+            this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.SaveToolStripMenuItem.Text = "Сохранение";
+            this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            // 
+            // LoadToolStripMenuItem
+            // 
+            this.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem";
+            this.LoadToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.LoadToolStripMenuItem.Text = "Загрузка";
+            this.LoadToolStripMenuItem.Click += new System.EventHandler(this.LoadToolStripMenuItem_Click);
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.Filter = "txt file | *.txt";
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.Filter = "txt file | *.txt";
             // 
             // FormMapWithSetTrucks
             // 
@@ -243,6 +292,8 @@
             this.ClientSize = new System.Drawing.Size(1182, 753);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.groupBoxTool);
+            this.Controls.Add(this.menuStrip);
+            this.MainMenuStrip = this.menuStrip;
             this.Name = "FormMapWithSetTrucks";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Карта с набором объектов";
@@ -251,7 +302,10 @@
             this.groupBoxMaps.ResumeLayout(false);
             this.groupBoxMaps.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -274,5 +328,11 @@
         private ListBox listBoxMaps;
         private Button buttonAddMap;
         private TextBox textBoxNewMapName;
+        private MenuStrip menuStrip;
+        private ToolStripMenuItem FileToolStripMenuItem;
+        private ToolStripMenuItem SaveToolStripMenuItem;
+        private ToolStripMenuItem LoadToolStripMenuItem;
+        private OpenFileDialog openFileDialog;
+        private SaveFileDialog saveFileDialog;
     }
 }

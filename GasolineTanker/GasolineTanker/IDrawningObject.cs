@@ -11,5 +11,7 @@
         void DrawningObject(Graphics g);
 
         (float Left, float Right, float Top, float Bottom) GetCurrentPosition();
+
+        string GetInfo();
     }    
 }

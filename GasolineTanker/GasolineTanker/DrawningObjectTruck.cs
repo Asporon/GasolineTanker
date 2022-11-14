@@ -30,5 +30,9 @@
         {
             _truck.DrawTransport(g);
         }
+
+        public string GetInfo() => _truck?.GetDataForSave();
+
+        public static IDrawningObject Create(string data) => new DrawningObjectTruck(data.CreateDrawningTruck());
     }
 }

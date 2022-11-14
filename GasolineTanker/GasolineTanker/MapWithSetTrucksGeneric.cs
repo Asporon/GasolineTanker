@@ -39,6 +39,23 @@
             return bmp;
         }
 
+        public string GetData(char separatorType, char separatorData)
+        {
+            string data = $"{_map.GetType().Name}{separatorType}";
+            foreach (var car in _setTrucks.GetTrucks())
+            {
+                data += $"{car.GetInfo()}{separatorData}";
+            }
+            return data;
+        }
+        public void LoadData(string[] records)
+        {
+            foreach (var rec in records)
+            {
+                _setTrucks.Insert(DrawningObjectTruck.Create(rec) as T);
+            }
+        }
+
         public Bitmap ShowOnMap()
         {
             Shaking();
