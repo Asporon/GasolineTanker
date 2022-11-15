@@ -56,17 +56,13 @@ namespace GasolineTanker
             }
             using (StreamWriter sw = new(filename))
             {
-                WriteToFile($"MapsCollection", sw);
+                sw.WriteLine($"MapsCollection", sw);
                 foreach (var storage in _mapStorages)
                 {
-                    WriteToFile($"{storage.Key}{separatorDict}{storage.Value.GetData(separatorDict, separatorData)}", sw);
+                    sw.WriteLine($"{storage.Key}{separatorDict}{storage.Value.GetData(separatorDict, separatorData)}", sw);
                 }
             }
             return true;
-        }
-        private static void WriteToFile(string text, StreamWriter streamWriter)
-        {
-            streamWriter.WriteLine(text);
         }
 
         public bool LoadData(string filename)
