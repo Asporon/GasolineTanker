@@ -67,7 +67,7 @@ namespace GasolineTanker
         {
             if (!File.Exists(filename))
             {
-                throw new Exception("Файл не найден");
+                throw new FileNotFoundException("Файл не найден");
             }
 
             string bufferStringFromFile = "";
@@ -75,7 +75,7 @@ namespace GasolineTanker
             {
                 if (!sr.ReadLine().Contains("MapsCollection"))
                 {
-                    throw new Exception("Формат данных в файле не правильный");
+                    throw new ArgumentException("Формат данных в файле не правильный");
                 }
 
                 _mapStorages.Clear();

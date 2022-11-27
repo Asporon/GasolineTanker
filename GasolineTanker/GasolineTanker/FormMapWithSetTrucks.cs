@@ -45,6 +45,7 @@ namespace GasolineTanker
             }
         }
 
+        //
         private void ButtonAddMap_Click(object sender, EventArgs e)
         {
             if (comboBoxSelectorMap.SelectedIndex == -1 || string.IsNullOrEmpty(textBoxNewMapName.Text))
@@ -62,11 +63,13 @@ namespace GasolineTanker
             _logger.LogInformation($"Добавлена карта {textBoxNewMapName.Text}");
         }
 
+        //
         private void ListBoxMaps_SelectedIndexChanged(object sender, EventArgs e)
         {
             pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
         }
 
+        //
         private void ButtonDeleteMap_Click(object sender, EventArgs e)
         {
             if (listBoxMaps.SelectedIndex == -1)
@@ -82,6 +85,7 @@ namespace GasolineTanker
             }
         }
 
+        //
         private void ButtonAddTruck_Click(object sender, EventArgs e)
         {
             var formTruckConfig = new FormTruckConfig();
@@ -103,6 +107,7 @@ namespace GasolineTanker
             }
         }
         
+        //
         private void ButtonRemoveTruck_Click(object sender, EventArgs e)
         {
             if (listBoxMaps.SelectedIndex == -1)
@@ -133,10 +138,12 @@ namespace GasolineTanker
             catch (TruckNotFoundException ex)
             {
                 MessageBox.Show($"Ошибка удаления: {ex.Message}");
+                //
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Неизвестная ошибка: {ex.Message}");
+                //
             }
         }
 
@@ -184,6 +191,7 @@ namespace GasolineTanker
             pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].MoveObject(dir);
         }
 
+        //
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -196,10 +204,12 @@ namespace GasolineTanker
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Не сохранилось: {ex.Message}", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //
                 }
             }
         }
 
+        //
         private void LoadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -213,6 +223,7 @@ namespace GasolineTanker
                 catch (Exception ex)
                 {
                     MessageBox.Show("Не загрузилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //
                 }
             }
         }
