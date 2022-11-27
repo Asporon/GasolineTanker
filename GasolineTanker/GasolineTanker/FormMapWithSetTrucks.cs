@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.DataFormats;
+﻿using Microsoft.Extensions.Logging;
 
 namespace GasolineTanker
 {
@@ -20,9 +11,12 @@ namespace GasolineTanker
         };
         private readonly MapsCollection _mapsCollection;
 
-        public FormMapWithSetTrucks()
+        private readonly ILogger _logger;
+
+        public FormMapWithSetTrucks(ILogger<FormMapWithSetTrucks> logger)
         {
             InitializeComponent();
+            _logger = logger;
             _mapsCollection = new MapsCollection(pictureBox.Width, pictureBox.Height);
             comboBoxSelectorMap.Items.Clear();
             foreach (var elem in _mapsDict)
@@ -65,6 +59,7 @@ namespace GasolineTanker
             }
             _mapsCollection.AddMap(textBoxNewMapName.Text, _mapsDict[comboBoxSelectorMap.Text]);
             ReloadMaps();
+            _logger.LogInformation($"Добавлена карта {textBoxNewMapName.Text}");
         }
 
         private void ListBoxMaps_SelectedIndexChanged(object sender, EventArgs e)
@@ -83,6 +78,7 @@ namespace GasolineTanker
             {
                 _mapsCollection.DelMap(listBoxMaps.SelectedItem?.ToString() ?? string.Empty);
                 ReloadMaps();
+                _logger.LogInformation($"Удалена карта {listBoxMaps.SelectedItem?.ToString()}");
             }
         }
 
@@ -91,6 +87,7 @@ namespace GasolineTanker
             var formTruckConfig = new FormTruckConfig();
             formTruckConfig.AddEvent(InsertCheck);
             formTruckConfig.Show();
+            _logger.LogInformation($"Удалена карта {listBoxMaps.SelectedItem?.ToString()}");
         }
         private void InsertCheck(DrawningTruck _truck)
         {
@@ -121,14 +118,25 @@ namespace GasolineTanker
                 return;
             }
             int pos = Convert.ToInt32(maskedTextBoxPosition.Text);
-            if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] - pos != null)
+            try
             {
-                MessageBox.Show("Объект удален");
-                pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+                if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] - pos != null)
+                {
+                    MessageBox.Show("Объект удален");
+                    pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось удалить объект");
+                }
             }
-            else
+            catch (TruckNotFoundException ex)
             {
-                MessageBox.Show("Не удалось удалить объект");
+                MessageBox.Show($"Ошибка удаления: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Неизвестная ошибка: {ex.Message}");
             }
         }
 
@@ -180,13 +188,14 @@ namespace GasolineTanker
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (_mapsCollection.SaveData(saveFileDialog.FileName))
+                try
                 {
+                    _mapsCollection.SaveData(saveFileDialog.FileName);
                     MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Не сохранилось: {ex.Message}", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -195,12 +204,13 @@ namespace GasolineTanker
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (_mapsCollection.LoadData(openFileDialog.FileName))
+                try
                 {
+                    _mapsCollection.LoadData(openFileDialog.FileName);
                     MessageBox.Show("Загрузка прошла успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ReloadMaps();
                 }
-                else
+                catch (Exception ex)
                 {
                     MessageBox.Show("Не загрузилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

@@ -26,6 +26,9 @@
 
         public int Insert(T truck, int position)
         {
+            if (_places.Count + 1 == _maxCount)
+                throw new StorageOverflowException();
+            
             if (position <= _places.Count && _places.Count + 1 <= _maxCount)
             {
                 _places.Insert(position, truck); 
@@ -37,6 +40,9 @@
 
         public T Remove(int position)
         {
+            if (_places[position] == null)
+                throw new TruckNotFoundException();
+            
             if (position < _places.Count)
             {
                 var truck = _places[position];

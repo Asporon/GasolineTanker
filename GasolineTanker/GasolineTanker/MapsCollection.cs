@@ -48,7 +48,7 @@ namespace GasolineTanker
             }
         }
 
-        public bool SaveData(string filename)
+        public void SaveData(string filename)
         {
             if (File.Exists(filename))
             {
@@ -62,13 +62,12 @@ namespace GasolineTanker
                     sw.WriteLine($"{storage.Key}{separatorDict}{storage.Value.GetData(separatorDict, separatorData)}");
                 }
             }
-            return true;
         }
-        public bool LoadData(string filename)
+        public void LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new Exception("Файл не найден");
             }
 
             string bufferStringFromFile = "";
@@ -76,7 +75,7 @@ namespace GasolineTanker
             {
                 if (!sr.ReadLine().Contains("MapsCollection"))
                 {
-                    return false;
+                    throw new Exception("Формат данных в файле не правильный");
                 }
 
                 _mapStorages.Clear();
@@ -97,7 +96,6 @@ namespace GasolineTanker
                     _mapStorages[elem[0]].LoadData(elem[2].Split(separatorData, StringSplitOptions.RemoveEmptyEntries));
                 }
             }
-            return true;
         }
     }
 }
