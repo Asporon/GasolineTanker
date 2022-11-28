@@ -73,7 +73,8 @@ namespace GasolineTanker
             string bufferStringFromFile = "";
             using (StreamReader sr = new(filename))
             {
-                if (!sr.ReadLine().Contains("MapsCollection"))
+                bufferStringFromFile = sr.ReadLine();
+                if (bufferStringFromFile == null || !bufferStringFromFile.Contains("MapsCollection"))
                 {
                     throw new ArgumentException("Формат данных в файле не правильный");
                 }
