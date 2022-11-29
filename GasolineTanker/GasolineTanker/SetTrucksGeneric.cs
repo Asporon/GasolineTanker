@@ -26,7 +26,7 @@
 
         public int Insert(T truck, int position)
         {
-            if (_places.Count + 1 == _maxCount)
+            if (_places.Count == _maxCount)
                 throw new StorageOverflowException();
             
             if (position <= _places.Count && _places.Count + 1 <= _maxCount)

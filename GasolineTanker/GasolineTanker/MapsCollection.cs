@@ -1,7 +1,4 @@
-﻿using System.Text;
-using System.Xml.Linq;
-
-namespace GasolineTanker
+﻿namespace GasolineTanker
 {
     internal class MapsCollection
     {

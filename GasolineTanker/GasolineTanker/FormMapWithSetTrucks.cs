@@ -1,5 +1,6 @@
-﻿using Serilog;
-using Serilog.Events;
+﻿using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Core;
 
 namespace GasolineTanker
 {
@@ -12,19 +13,12 @@ namespace GasolineTanker
         };
         private readonly MapsCollection _mapsCollection;
 
-        
-        public FormMapWithSetTrucks()
+        private readonly ILogger<FormMapWithSetTrucks> _logger;
+
+        public FormMapWithSetTrucks(ILogger<FormMapWithSetTrucks> logger)
         {
             InitializeComponent();
-
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.File(@"D:\log.txt",
-                              restrictedToMinimumLevel: LogEventLevel.Information,
-                              rollingInterval: RollingInterval.Day,
-                              fileSizeLimitBytes: 4096,
-                              rollOnFileSizeLimit: true)
-                .CreateLogger();
-
+            _logger = logger;
             _mapsCollection = new MapsCollection(pictureBox.Width, pictureBox.Height);
             comboBoxSelectorMap.Items.Clear();
             foreach (var elem in _mapsDict)
@@ -67,13 +61,13 @@ namespace GasolineTanker
             }
             _mapsCollection.AddMap(textBoxNewMapName.Text, _mapsDict[comboBoxSelectorMap.Text]);
             ReloadMaps();
-            Log.Logger.Information($"Добавлена карта {textBoxNewMapName.Text}");
+            _logger.LogInformation($"Добавлена карта {textBoxNewMapName.Text}");
         }
 
-        //
         private void ListBoxMaps_SelectedIndexChanged(object sender, EventArgs e)
         {
             pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+            _logger.LogInformation($"Выбрана карта {listBoxMaps.SelectedItem?.ToString()}");
         }
 
         private void ButtonDeleteMap_Click(object sender, EventArgs e)
@@ -87,17 +81,16 @@ namespace GasolineTanker
             {
                 _mapsCollection.DelMap(listBoxMaps.SelectedItem?.ToString() ?? string.Empty);
                 ReloadMaps();
-                Log.Logger.Information($"Удалена карта {listBoxMaps.SelectedItem?.ToString()}");
+                _logger.LogInformation($"Удалена карта {listBoxMaps.SelectedItem?.ToString()}");
             }
         }
 
-        //
         private void ButtonAddTruck_Click(object sender, EventArgs e)
         {
             var formTruckConfig = new FormTruckConfig();
             formTruckConfig.AddEvent(InsertCheck);
             formTruckConfig.Show();
-            Log.Logger.Information($"Добавлен объект");
+            _logger.LogInformation($"Добавлен объект на место 0");
         }
         private void InsertCheck(DrawningTruck _truck)
         {
@@ -113,7 +106,7 @@ namespace GasolineTanker
             }
         }
         
-        //
+        
         private void ButtonRemoveTruck_Click(object sender, EventArgs e)
         {
             if (listBoxMaps.SelectedIndex == -1)
@@ -135,7 +128,7 @@ namespace GasolineTanker
                 {
                     MessageBox.Show("Объект удален");
                     pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
-                    Log.Logger.Information($"Объект удален");
+                    _logger.LogInformation($"Удален объект на месте {maskedTextBoxPosition.Text}");
                 }
                 else
                 {
@@ -145,12 +138,12 @@ namespace GasolineTanker
             catch (TruckNotFoundException ex)
             {
                 MessageBox.Show($"Ошибка удаления: {ex.Message}");
-                Log.Logger.Warning($"Ошибка удаления объекта: {ex.Message}");
+                Log.Logger.Warning($"Ошибка удаления объекта на месте {maskedTextBoxPosition.Text}: {ex.Message}");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Неизвестная ошибка: {ex.Message}");
-                Log.Logger.Warning($"Ошибка удаления объекта: {ex.Message}");
+                Log.Logger.Warning($"Ошибка удаления объекта на месте {maskedTextBoxPosition.Text}: {ex.Message}");
             }
         }
 
@@ -206,12 +199,12 @@ namespace GasolineTanker
                 {
                     _mapsCollection.SaveData(saveFileDialog.FileName);
                     MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.Logger.Information($"Сохранение данных в {saveFileDialog.FileName}");
+                    _logger.LogInformation($"Сохранение данных в {saveFileDialog.FileName}");
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Не сохранилось: {ex.Message}", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Log.Logger.Warning($"Ошибка в сохранении данных в {saveFileDialog.FileName}");
+                    _logger.LogWarning($"Ошибка в сохранении данных в {saveFileDialog.FileName}");
                 }
             }
         }
@@ -224,13 +217,13 @@ namespace GasolineTanker
                 {
                     _mapsCollection.LoadData(openFileDialog.FileName);
                     MessageBox.Show("Загрузка прошла успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.Logger.Information($"Загрузка данных из {openFileDialog.FileName}");
+                    _logger.LogInformation($"Загрузка данных из {openFileDialog.FileName}");
                     ReloadMaps();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Не загрузилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Log.Logger.Warning($"Ошибка в загрузке данных из {openFileDialog.FileName}");
+                    _logger.LogWarning($"Ошибка в загрузке данных из {openFileDialog.FileName}");
                 }
             }
         }
