@@ -32,12 +32,15 @@ namespace GasolineTanker
                     {
                         var configuration = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("appsettings.json")
+                            .AddJsonFile(path: "appsettings.json")
                             .Build();
 
-                        Log.Logger = new LoggerConfiguration()
+                        var logger = new LoggerConfiguration()
                             .ReadFrom.Configuration(configuration)
                             .CreateLogger();
+
+                        option.SetMinimumLevel(LogLevel.Information);
+                        option.AddSerilog(logger);
                     });
         }
     }

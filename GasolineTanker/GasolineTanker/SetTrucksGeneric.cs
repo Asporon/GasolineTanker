@@ -15,21 +15,15 @@
 
         public int Insert(T truck)
         {
-            if (_places.Count + 1 <= _maxCount)
-            {
-                _places.Insert(0, truck);
-                return 0;
-            }
-            else
-                return -1;
+            return Insert(truck, 0);
         }
 
         public int Insert(T truck, int position)
         {
-            if (_places.Count == _maxCount)
-                throw new StorageOverflowException();
+            if (Count == _maxCount)
+                throw new StorageOverflowException(_maxCount);
             
-            if (position <= _places.Count && _places.Count + 1 <= _maxCount)
+            if (position >= 0 && position <= _places.Count)
             {
                 _places.Insert(position, truck); 
                 return position;
@@ -40,17 +34,14 @@
 
         public T Remove(int position)
         {
-            if (_places[position] == null)
-                throw new TruckNotFoundException();
-            
-            if (position < _places.Count)
+            if (position < 0 || position >= Count)
             {
-                var truck = _places[position];
-                _places.RemoveAt(position);       
-                return truck;
+                throw new TruckNotFoundException(position);
             }
-            else
-                return null;
+
+            var truck = _places[position];
+            _places.RemoveAt(position);
+            return truck;
         }
 
         public T this[int position]

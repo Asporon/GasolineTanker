@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Serilog;
-using Serilog.Core;
 
 namespace GasolineTanker
 {
@@ -13,7 +11,7 @@ namespace GasolineTanker
         };
         private readonly MapsCollection _mapsCollection;
 
-        private readonly ILogger<FormMapWithSetTrucks> _logger;
+        private readonly ILogger _logger;
 
         public FormMapWithSetTrucks(ILogger<FormMapWithSetTrucks> logger)
         {
@@ -52,22 +50,24 @@ namespace GasolineTanker
             if (comboBoxSelectorMap.SelectedIndex == -1 || string.IsNullOrEmpty(textBoxNewMapName.Text))
             {
                 MessageBox.Show("Не все данные заполнены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogWarning($"Ошибка добавления карты {textBoxNewMapName.Text}: не все данные заполнены.");
                 return;
             }
             if (!_mapsDict.ContainsKey(comboBoxSelectorMap.Text))
             {
                 MessageBox.Show("Нет такой карты", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogWarning($"Ошибка добавления карты {textBoxNewMapName.Text}: такая карта отсутсвует.");
                 return;
             }
             _mapsCollection.AddMap(textBoxNewMapName.Text, _mapsDict[comboBoxSelectorMap.Text]);
             ReloadMaps();
-            _logger.LogInformation($"Добавлена карта {textBoxNewMapName.Text}");
+            _logger.LogInformation($"Добавлена карта {textBoxNewMapName.Text}.");
         }
 
         private void ListBoxMaps_SelectedIndexChanged(object sender, EventArgs e)
         {
             pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
-            _logger.LogInformation($"Выбрана карта {listBoxMaps.SelectedItem?.ToString()}");
+            _logger.LogInformation($"Выбрана карта {listBoxMaps.SelectedItem?.ToString()}.");
         }
 
         private void ButtonDeleteMap_Click(object sender, EventArgs e)
@@ -81,7 +81,7 @@ namespace GasolineTanker
             {
                 _mapsCollection.DelMap(listBoxMaps.SelectedItem?.ToString() ?? string.Empty);
                 ReloadMaps();
-                _logger.LogInformation($"Удалена карта {listBoxMaps.SelectedItem?.ToString()}");
+                _logger.LogInformation($"Удалена карта {listBoxMaps.SelectedItem?.ToString()}.");
             }
         }
 
@@ -90,22 +90,35 @@ namespace GasolineTanker
             var formTruckConfig = new FormTruckConfig();
             formTruckConfig.AddEvent(InsertCheck);
             formTruckConfig.Show();
-            _logger.LogInformation($"Добавлен объект на место 0");
         }
         private void InsertCheck(DrawningTruck _truck)
         {
-            DrawningObjectTruck truck = new(_truck);
-            if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] + truck >= 0)
+            try
             {
-                MessageBox.Show("Объект добавлен");
+                DrawningObjectTruck truck = new(_truck);
+                if (_mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty] + truck != -1)
+                {
+                    MessageBox.Show("Объект добавлен.");
+                    _logger.LogInformation($"Добавлен объект на место 0.");
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось добавить объект на место 0."); 
+                    _logger.LogWarning("Не удалось добавить объект на место 0.");
+                }
                 pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
             }
-            else
+            catch (StorageOverflowException ex)
             {
-                MessageBox.Show("Не удалось добавить объект");
+                MessageBox.Show($"Ошибка добавления: {ex.Message}");
+                _logger.LogWarning($"Ошибка добавления объекта на месте {maskedTextBoxPosition.Text}: {ex.Message}.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка добавления: {ex.Message}");
+                _logger.LogWarning($"Ошибка добавления объекта на месте {maskedTextBoxPosition.Text}: {ex.Message}.");
             }
         }
-        
         
         private void ButtonRemoveTruck_Click(object sender, EventArgs e)
         {
@@ -128,22 +141,18 @@ namespace GasolineTanker
                 {
                     MessageBox.Show("Объект удален");
                     pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
-                    _logger.LogInformation($"Удален объект на месте {maskedTextBoxPosition.Text}");
+                    _logger.LogInformation($"Удален объект на месте {maskedTextBoxPosition.Text}.");
                 }
                 else
                 {
+                    _logger.LogWarning("Не удалось удалить объект по позиции {0}. Объект равен null", pos);
                     MessageBox.Show("Не удалось удалить объект");
                 }
             }
             catch (TruckNotFoundException ex)
             {
                 MessageBox.Show($"Ошибка удаления: {ex.Message}");
-                Log.Logger.Warning($"Ошибка удаления объекта на месте {maskedTextBoxPosition.Text}: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Неизвестная ошибка: {ex.Message}");
-                Log.Logger.Warning($"Ошибка удаления объекта на месте {maskedTextBoxPosition.Text}: {ex.Message}");
+                _logger.LogWarning($"Ошибка удаления объекта на месте {maskedTextBoxPosition.Text}: {ex.Message}.");
             }
         }
 

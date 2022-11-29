@@ -73,7 +73,7 @@
                 bufferStringFromFile = sr.ReadLine();
                 if (bufferStringFromFile == null || !bufferStringFromFile.Contains("MapsCollection"))
                 {
-                    throw new ArgumentException("Формат данных в файле не правильный");
+                    throw new FileFormatException("Формат данных в файле не правильный");
                 }
 
                 _mapStorages.Clear();
