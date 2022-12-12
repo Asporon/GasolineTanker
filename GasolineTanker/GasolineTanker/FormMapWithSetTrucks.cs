@@ -236,5 +236,25 @@ namespace GasolineTanker
                 }
             }
         }
+
+        private void ButtonSortByType_Click(object sender, EventArgs e)
+        {
+            if (listBoxMaps.SelectedIndex == -1)
+            {
+                return;
+            }
+            _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].Sort(new TruckCompareByType());
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+        }
+
+        private void ButtonSortByColor_Click(object sender, EventArgs e)
+        {
+            if (listBoxMaps.SelectedIndex == -1)
+            {
+                return;
+            }
+            _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].Sort(new TruckCompareByColor());
+            pictureBox.Image = _mapsCollection[listBoxMaps.SelectedItem?.ToString() ?? string.Empty].ShowSet();
+        }
     }
 }

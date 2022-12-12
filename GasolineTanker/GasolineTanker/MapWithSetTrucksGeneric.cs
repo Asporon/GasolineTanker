@@ -1,7 +1,7 @@
 ﻿namespace GasolineTanker
 {
     internal class MapWithSetTrucksGeneric<T, U>
-        where T : class, IDrawningObject
+        where T : class, IDrawningObject, IEquatable<T>
         where U : AbstractMap
     {
         private readonly int _pictureWidth;
@@ -54,6 +54,11 @@
             {
                 _setTrucks.Insert(DrawningObjectTruck.Create(rec) as T);
             }
+        }
+
+        public void Sort(IComparer<T> comparer)
+        {
+            _setTrucks.SortSet(comparer);
         }
 
         public Bitmap ShowOnMap()

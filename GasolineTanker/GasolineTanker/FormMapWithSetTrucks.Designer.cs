@@ -51,6 +51,8 @@
             this.LoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.buttonSortByType = new System.Windows.Forms.Button();
+            this.buttonSortByColor = new System.Windows.Forms.Button();
             this.groupBoxTool.SuspendLayout();
             this.groupBoxMaps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -59,6 +61,8 @@
             // 
             // groupBoxTool
             // 
+            this.groupBoxTool.Controls.Add(this.buttonSortByColor);
+            this.groupBoxTool.Controls.Add(this.buttonSortByType);
             this.groupBoxTool.Controls.Add(this.groupBoxMaps);
             this.groupBoxTool.Controls.Add(this.buttonShowOnMap);
             this.groupBoxTool.Controls.Add(this.buttonLeft);
@@ -142,7 +146,7 @@
             // 
             // buttonShowOnMap
             // 
-            this.buttonShowOnMap.Location = new System.Drawing.Point(11, 570);
+            this.buttonShowOnMap.Location = new System.Drawing.Point(12, 582);
             this.buttonShowOnMap.Name = "buttonShowOnMap";
             this.buttonShowOnMap.Size = new System.Drawing.Size(200, 30);
             this.buttonShowOnMap.TabIndex = 9;
@@ -198,7 +202,7 @@
             // 
             // buttonShowStorage
             // 
-            this.buttonShowStorage.Location = new System.Drawing.Point(11, 486);
+            this.buttonShowStorage.Location = new System.Drawing.Point(12, 531);
             this.buttonShowStorage.Name = "buttonShowStorage";
             this.buttonShowStorage.Size = new System.Drawing.Size(200, 30);
             this.buttonShowStorage.TabIndex = 4;
@@ -208,7 +212,7 @@
             // 
             // buttonRemoveTruck
             // 
-            this.buttonRemoveTruck.Location = new System.Drawing.Point(11, 438);
+            this.buttonRemoveTruck.Location = new System.Drawing.Point(12, 483);
             this.buttonRemoveTruck.Name = "buttonRemoveTruck";
             this.buttonRemoveTruck.Size = new System.Drawing.Size(200, 30);
             this.buttonRemoveTruck.TabIndex = 3;
@@ -218,7 +222,7 @@
             // 
             // maskedTextBoxPosition
             // 
-            this.maskedTextBoxPosition.Location = new System.Drawing.Point(11, 405);
+            this.maskedTextBoxPosition.Location = new System.Drawing.Point(12, 450);
             this.maskedTextBoxPosition.Name = "maskedTextBoxPosition";
             this.maskedTextBoxPosition.Size = new System.Drawing.Size(200, 27);
             this.maskedTextBoxPosition.TabIndex = 2;
@@ -226,7 +230,7 @@
             // 
             // buttonAddTruck
             // 
-            this.buttonAddTruck.Location = new System.Drawing.Point(11, 369);
+            this.buttonAddTruck.Location = new System.Drawing.Point(12, 414);
             this.buttonAddTruck.Name = "buttonAddTruck";
             this.buttonAddTruck.Size = new System.Drawing.Size(200, 30);
             this.buttonAddTruck.TabIndex = 1;
@@ -285,6 +289,26 @@
             // 
             this.saveFileDialog.Filter = "txt file | *.txt";
             // 
+            // buttonSortByType
+            // 
+            this.buttonSortByType.Location = new System.Drawing.Point(12, 335);
+            this.buttonSortByType.Name = "buttonSortByType";
+            this.buttonSortByType.Size = new System.Drawing.Size(196, 29);
+            this.buttonSortByType.TabIndex = 11;
+            this.buttonSortByType.Text = "Сортировать по типу";
+            this.buttonSortByType.UseVisualStyleBackColor = true;
+            this.buttonSortByType.Click += new System.EventHandler(this.ButtonSortByType_Click);
+            // 
+            // buttonSortByColor
+            // 
+            this.buttonSortByColor.Location = new System.Drawing.Point(12, 370);
+            this.buttonSortByColor.Name = "buttonSortByColor";
+            this.buttonSortByColor.Size = new System.Drawing.Size(200, 29);
+            this.buttonSortByColor.TabIndex = 12;
+            this.buttonSortByColor.Text = "Сортировать по цвету";
+            this.buttonSortByColor.UseVisualStyleBackColor = true;
+            this.buttonSortByColor.Click += new System.EventHandler(this.ButtonSortByColor_Click);
+            // 
             // FormMapWithSetTrucks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -334,5 +358,7 @@
         private ToolStripMenuItem LoadToolStripMenuItem;
         private OpenFileDialog openFileDialog;
         private SaveFileDialog saveFileDialog;
+        private Button buttonSortByColor;
+        private Button buttonSortByType;
     }
 }

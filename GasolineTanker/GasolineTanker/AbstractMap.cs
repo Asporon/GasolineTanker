@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GasolineTanker
 {
-    internal abstract class AbstractMap
+    internal abstract class AbstractMap : IEquatable<AbstractMap>
     {
         private IDrawningObject _drawningObject = null;
         protected int[,] _map = null;
@@ -110,5 +110,50 @@ namespace GasolineTanker
         protected abstract void GenerateMap();
         protected abstract void DrawRoadPart(Graphics g, int i, int j);
         protected abstract void DrawBarrierPart(Graphics g, int i, int j);
+
+        public bool Equals(AbstractMap? other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            if (_map.GetLength(0) == other._map.GetLength(0) && _map.GetLength(1) == other._map.GetLength(1))
+            {
+                for (int i = 0; i < _map.GetLength(0); i++)
+                {
+                    for (int j = 0; j < _map.GetLength(1); j++)
+                    {
+                        if (_map[i, j] != other._map[i, j])
+                        {
+                            return false;
+                        }
+                    }
+                }
+            } 
+            else
+            {
+                return false;
+            }
+
+            if (_width != other._width)
+            {
+                return false;
+            }
+            if (_height != other._height)
+            {
+                return false;
+            }
+            if (_size_x != other._size_x)
+            {
+                return false;
+            }
+            if (_size_y != other._size_y)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

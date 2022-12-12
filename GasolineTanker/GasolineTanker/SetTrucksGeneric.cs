@@ -1,7 +1,7 @@
 ﻿namespace GasolineTanker
 {
     internal class SetTrucksGeneric<T>
-        where T : class
+        where T : class, IEquatable<T>
     {
 		private readonly List<T> _places;
         public int Count => _places.Count;
@@ -20,9 +20,12 @@
 
         public int Insert(T truck, int position)
         {
+            if (_places.Contains(truck))
+                throw new Exception();
+
             if (Count == _maxCount)
                 throw new StorageOverflowException(_maxCount);
-            
+
             if (position >= 0 && position <= _places.Count)
             {
                 _places.Insert(position, truck); 
@@ -72,6 +75,15 @@
                     yield break;
                 }
             }
+        }
+
+        public void SortSet(IComparer<T> comparer)
+        {
+            if (comparer == null)
+            {
+                return;
+            }
+            _places.Sort(comparer);
         }
     }
 }

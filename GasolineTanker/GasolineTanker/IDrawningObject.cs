@@ -1,6 +1,6 @@
 ﻿namespace GasolineTanker
 {
-    internal interface IDrawningObject
+    internal interface IDrawningObject : IEquatable<IDrawningObject>
     {
         public float Step { get; }
 
